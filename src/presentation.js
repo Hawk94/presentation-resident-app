@@ -17,6 +17,7 @@ import {
   List,
   ListItem
 } from 'spectacle';
+import CodeSlide from 'spectacle-code-slide';
 
 // Import theme
 import createTheme from 'spectacle/lib/themes/default';
@@ -41,7 +42,18 @@ import expo from './assets/old/expo.png';
 import magic from './assets/old/magic.gif';
 
 import ReactBlue from './assets/logos/ReactLogo.svg';
+import FirebaseLogo from './assets/logos/firebase.svg';
 import CollectiveBlack from './assets/logos/CollectiveLogo.svg';
+import CollectiveWhite from './assets/logos/CollectiveLogoWhite.svg';
+import WeWorkWhite from './assets/logos/WeWork.png';
+import WeLiveWhite from './assets/logos/welive-logo--white.svg';
+import CommonWhite from './assets/logos/common-logo-white.svg';
+import ZokuWhite from './assets/logos/zoku.svg';
+import orangeBg from './assets/pictures/orangeBg.png';
+import iPhones from './assets/pictures/iPhones.png';
+import PrimaryTechnologies from './assets/pictures/mainTechnologies.png';
+import SecondaryTechnologies from './assets/pictures/SecondaryTechnologies.png';
+import CommunityTools from './assets/pictures/Silver.png';
 
 // Require CSS
 require('normalize.css');
@@ -68,7 +80,8 @@ const theme = createTheme(
     blueBg: '#0EA2ED',
     yellowBg: '#F3DC72',
     yellow: '#FFBC4A',
-    pink: '#e173a9'
+    pink: '#e173a9',
+    dark: '#252729'
   },
   {
     primary: 'Varela',
@@ -114,6 +127,115 @@ export default class Presentation extends React.Component {
             </div>
           </Slide>
         </Magic>
+        <Slide bgColor="orangeBg">
+          <Image src={iPhones} width="500px" style={{ marginTop: '-20px' }} />
+        </Slide>
+        <Slide bgColor="dark">
+          <Heading fit caps textColor="white">
+            Co-working? <span role="img">🤔</span>
+          </Heading>
+        </Slide>
+        <Slide bgColor="dark">
+          <Image src={WeWorkWhite} />
+        </Slide>
+        <Slide bgColor="dark">
+          <div style={{ height: '500px' }}>
+            <BlockQuote size={6}>
+              <Quote>
+                "WeWork is a global network where companies and people grow
+                together."
+              </Quote>
+              <Cite>wework.com [2018]</Cite>
+            </BlockQuote>
+          </div>
+        </Slide>
+        <Slide bgColor="darkBlue">
+          <Heading fit caps textColor="white">
+            Co-living? <span role="img">🤔</span>
+          </Heading>
+        </Slide>
+        <Slide bgColor="dark">
+          <Image src={WeLiveWhite} width="467px" height="105px" />
+        </Slide>
+        <Slide bgColor="dark">
+          <Image src={WeLiveWhite} width="467px" height="105px" />
+          <Image src={CommonWhite} height="105px" />
+        </Slide>
+        <Slide bgColor="dark">
+          <Image src={WeLiveWhite} width="467px" height="105px" />
+          <Image src={CommonWhite} height="105px" />
+          <Image src={ZokuWhite} height="105px" />
+        </Slide>
+        <Slide bgColor="dark">
+          <Image src={CollectiveWhite} height="205px" />
+        </Slide>
+        <Slide bgColor="black">
+          <BlockQuote size={6}>
+            <Quote>"A new way to live in london"</Quote>
+          </BlockQuote>
+        </Slide>
+        <Slide bgColor="blueBg">
+          <Heading fit>
+            The Technology <span role="img">🤓</span>
+          </Heading>
+        </Slide>
+        <Slide bgColor="blueBg">
+          <Image src={PrimaryTechnologies} />
+        </Slide>
+        <Slide bgColor="blueBg">
+          <Image
+            src={SecondaryTechnologies}
+            height="500px"
+            style={{ marginTop: '-20px' }}
+          />
+        </Slide>
+        <CodeSlide
+          transition={[]}
+          bgColor="blueBg"
+          lang="js"
+          code="class AnnouncementModal extends Component<AnnouncementModalProps, *> {
+            static defaultProps = {
+              seen: {}
+            };"
+          ranges={[
+            { loc: [0, 270], title: 'Walking through some code' },
+            { loc: [0, 1], title: 'The Beginning' },
+            { loc: [1, 2] },
+            { loc: [1, 2], note: 'Heres a note!' },
+            { loc: [2, 3] },
+            { loc: [4, 7], image: CollectiveWhite },
+            { loc: [8, 10] }
+            // ...
+          ]}
+        />
+        <Slide bgColor="blueBg">
+          <Image src={CommunityTools} />
+        </Slide>
+        <Slide bgColor="blueBg">
+          <Heading fit>
+            Live Demo... <span role="img">💃🕺</span>
+          </Heading>
+        </Slide>
+        <Slide bgColor="christmasRed" textColor="white">
+          <div style={{ marginBottom: '100px' }}>
+            <Heading size={4} textColor="white">
+              Thank you!
+            </Heading>
+          </div>
+          <div style={{ marginBottom: '100px' }}>
+            <Heading size={4} textColor="white">
+              Happy Holidays! 🎄
+            </Heading>
+          </div>
+          <div style={{ marginBottom: '50px' }}>
+            <Text textColor="white" fit>
+              Google: "React Native getting started"
+            </Text>
+          </div>
+          <Text textColor="white" fit>
+            https://facebook.github.io/react-native/docs/getting-started.html
+          </Text>
+        </Slide>
 
         <Slide bgColor="darkBlue">
           <Heading fit textColor="white">
@@ -122,7 +244,7 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide bgColor="black">
           <div style={{ height: '500px' }}>
-            <BlockQuote>
+            <BlockQuote size={6}>
               <Quote>
                 "people who are really serious about software should make their
                 own hardware"

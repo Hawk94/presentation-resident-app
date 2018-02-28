@@ -1,0 +1,161 @@
+const CodeExample = `// @flow
+
+    import React, { Component } from 'react';
+    import { firebaseConnect } from 'react-redux-firebase';
+    import { compose } from 'redux';
+    import { connect, type Connector } from 'react-redux';
+    import { TouchableOpacity, Modal } from 'react-native';
+    import styled from 'styled-components/native';
+    import { Text } from '~/src/components/Text';
+    import { FlashToggleButton } from '~/src/components/Button';
+    import Icon from '~/src/components/Icon';
+    import Section from '~/src/components/Section';
+    import type { AnnouncementType, FirebaseType } from '~/src/types';
+    import type { State } from '~/src/features';
+    import Screen from '~/src/components/Screen';
+
+    const Heading = styled(Text).attrs({ bold: true, size: 'normal' })\`
+      text-align: center;
+    \`;
+
+    const Title = styled(Text).attrs({ bold: true, size: 'large' })\`
+      text-align: center;
+    \`;
+
+    const RemoveIcon = styled(Icon).attrs({ iconType: 'Close' })\`
+      width: 12px;
+      height: 12px;
+    \`;
+
+    const Announcement = styled(Icon).attrs({ iconType: 'Announcement' })\`
+      width: 222px;
+      height: 140px;
+    \`;
+
+    const Placeholder = styled.View\`
+      width: 12px;
+      height: 12px;
+    \`;
+
+    const Header = styled.View\`
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+    \`;
+
+    const BodyText = styled(Text).attrs({ size: 'small', bold: true })\`
+      text-align: center;
+    \`;
+
+    const ButtonContainer = styled.View\`
+      position: absolute;
+      bottom: 40;
+      left: 0;
+      right: 0;
+      justify-content: center;
+      align-items: center;
+    \`;
+
+    const Content = styled.View\`
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      margin-bottom: 150px;
+    \`;
+
+    type AnnouncementModalProps = {
+      announcementId: string,
+      announcement: AnnouncementType,
+      uid: string,
+      seen: { [key: string]: boolean },
+      firebase: FirebaseType
+    };
+
+    class AnnouncementModal extends Component<AnnouncementModalProps, *> {
+      static defaultProps = {
+        seen: {}
+      };
+
+      constructor(props) {
+        super(props);
+        this.state = {
+          hasGotIt: props.seen[props.announcementId]
+        };
+      }
+
+      props: AnnouncementModalProps;
+
+      toggleAnnouncement = () => {
+        const { firebase, uid, announcementId } = this.props;
+        this.setState({
+          hasGotIt: true
+        });
+        setTimeout(() => {
+          this.setState({
+            hasGotIt: false
+          });
+          firebase.set(\`users/{uid}/announcements/{announcementId}\`, true);
+        }, 500);
+      };
+
+      render() {
+        const { announcement } = this.props;
+
+        return (
+          <Modal
+            visible
+            animationType="slide"
+            onRequestClose={this.toggleAnnouncement}
+          >
+            <Screen fixed>
+              <Header>
+                <Placeholder />
+                <Heading>Important Announcement</Heading>
+                <TouchableOpacity onPress={this.toggleAnnouncement}>
+                  <RemoveIcon iconType="Close" />
+                </TouchableOpacity>
+              </Header>
+              <Section spacing="top" size="small">
+                <Title>{announcement.title}</Title>
+              </Section>
+              <Content>
+                <Section spacing="top" center>
+                  <Announcement />
+                </Section>
+                <Section spacing="top">
+                  <BodyText>{announcement.description}</BodyText>
+                </Section>
+              </Content>
+              <ButtonContainer>
+                <FlashToggleButton
+                  buttonWidth="264px"
+                  buttonHeight="60px"
+                  isOn={this.state.hasGotIt}
+                  isDisabled={false}
+                  text="I got it!"
+                  onPress={this.toggleAnnouncement}
+                />
+              </ButtonContainer>
+            </Screen>
+          </Modal>
+        );
+      }
+    }
+
+    AnnouncementModal.defaultProps = {
+      seen: {}
+    };
+
+    const container: Connector<{}, AnnouncementModalProps> = compose(
+      firebaseConnect(),
+      connect(({ firebase }: State) => ({
+        uid: firebase.auth.uid,
+        seen: firebase.profile.announcements
+      }))
+    );
+
+    export default container(AnnouncementModal);
+    `;
+
+export default CodeExample;
